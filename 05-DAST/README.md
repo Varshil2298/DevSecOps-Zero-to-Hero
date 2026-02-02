@@ -131,7 +131,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: pod-reader
-  namespace: dev
+  namespace: payments
 rules:
 - apiGroups: [""]
   resources: ["pods"]
@@ -157,11 +157,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: read-pods-binding
-  namespace: dev
+  namespace: payments
 subjects:
 - kind: ServiceAccount
-  name: dev-user
-  namespace: dev
+  name: payments-user
+  namespace: payments
 roleRef:
   kind: Role
   name: pod-reader
@@ -178,7 +178,7 @@ Check permissions:
 ```
 kubectl auth can-i list pods \
   --as=system:serviceaccount:payments:payments-user \
-  -n dev
+  -n payments
 ```
 
 Expected output:
@@ -192,7 +192,7 @@ Try deleting pods:
 ```
 kubectl auth can-i delete pods \
   --as=system:serviceaccount:dev:dev-user \
-  -n dev
+  -n payments
 ```
 
 Expected output:
